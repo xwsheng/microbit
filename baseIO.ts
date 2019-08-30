@@ -36,30 +36,30 @@ enum PIN {
 }
  
 //% weight=5 color=#9900CC icon="\uf53b"
-namespace MCP23017 {
-    const MCP23017_ADDRESS = 0x20
-    const MCP23017_IODIRA = 0x00
-    const MCP23017_IPOLA = 0x02
-    const MCP23017_GPINTENA = 0x04
-    const MCP23017_DEFVALA = 0x06
-    const MCP23017_INTCONA = 0x08
-    const MCP23017_IOCONA = 0x0A
-    const MCP23017_GPPUA = 0x0C
-    const MCP23017_INTFA = 0x0E
-    const MCP23017_INTCAPA = 0x10
-    const MCP23017_GPIOA = 0x12
-    const MCP23017_OLATA = 0x14
-    const MCP23017_IODIRB = 0x01
-    const MCP23017_IPOLB = 0x03
-    const MCP23017_GPINTENB = 0x05
-    const MCP23017_DEFVALB = 0x07
-    const MCP23017_INTCONB = 0x09
-    const MCP23017_IOCONB = 0x0B
-    const MCP23017_GPPUB = 0x0D
-    const MCP23017_INTFB = 0x0F
-    const MCP23017_INTCAPB = 0x11
-    const MCP23017_GPIOB = 0x13
-    const MCP23017_OLATB = 0x15
+namespace BASEIO {
+    const BASEIO_ADDRESS = 0x20
+    const BASEIO_IODIRA = 0x00
+    const BASEIO_IPOLA = 0x02
+    const BASEIO_GPINTENA = 0x04
+    const BASEIO_DEFVALA = 0x06
+    const BASEIO_INTCONA = 0x08
+    const BASEIO_IOCONA = 0x0A
+    const BASEIO_GPPUA = 0x0C
+    const BASEIO_INTFA = 0x0E
+    const BASEIO_INTCAPA = 0x10
+    const BASEIO_GPIOA = 0x12
+    const BASEIO_OLATA = 0x14
+    const BASEIO_IODIRB = 0x01
+    const BASEIO_IPOLB = 0x03
+    const BASEIO_GPINTENB = 0x05
+    const BASEIO_DEFVALB = 0x07
+    const BASEIO_INTCONB = 0x09
+    const BASEIO_IOCONB = 0x0B
+    const BASEIO_GPPUB = 0x0D
+    const BASEIO_INTFB = 0x0F
+    const BASEIO_INTCAPB = 0x11
+    const BASEIO_GPIOB = 0x13
+    const BASEIO_OLATB = 0x15
  
     let initialized = false
  
@@ -76,23 +76,23 @@ namespace MCP23017 {
         return val;
     }
  
-    function initMCP23017(): void {
+    function initBASEIO(): void {
         for (let regAddr = 0; regAddr < 22; regAddr++) {
             if (regAddr == 0 || regAddr == 1) {
-                i2cwrite(MCP23017_ADDRESS, regAddr, 0xFF);
+                i2cwrite(BASEIO_ADDRESS, regAddr, 0xFF);
             }
             else {
-                i2cwrite(MCP23017_ADDRESS, regAddr, 0x00);
+                i2cwrite(BASEIO_ADDRESS, regAddr, 0x00);
             }
         }
  
         //configue all PinA output
-        i2cwrite(MCP23017_ADDRESS, MCP23017_IODIRA, 0x00);
+        i2cwrite(BASEIO_ADDRESS, BASEIO_IODIRA, 0x00);
  
         //configue all PinB input
-        i2cwrite(MCP23017_ADDRESS, MCP23017_IODIRB, 0xFF);
+        i2cwrite(BASEIO_ADDRESS, BASEIO_IODIRB, 0xFF);
         //configue all PinB pullUP
-        i2cwrite(MCP23017_ADDRESS, MCP23017_GPPUB, 0xFF);
+        i2cwrite(BASEIO_ADDRESS, BASEIO_GPPUB, 0xFF);
  
         initialized = true;
     }
@@ -105,7 +105,7 @@ namespace MCP23017 {
     //% blockId=ReadReg block="Read register |%reg| data"
     //% weight=65
     export function ReadReg(reg: REGISTER): number {
-        let val = i2cread(MCP23017_ADDRESS, reg);
+        let val = i2cread(BASEIO_ADDRESS, reg);
         return val;
     }
  
@@ -119,13 +119,13 @@ namespace MCP23017 {
     //% value.min=0 value.max=255
     export function WritePin(pin: PIN, value: number): void {
         if (!initialized) {
-            initMCP23017();
+            initBASEIO();
         }
         if (pin == 0) {
-            i2cwrite(MCP23017_ADDRESS, MCP23017_GPIOA, value);
+            i2cwrite(BASEIO_ADDRESS, BASEIO_GPIOA, value);
         }
         else {
-            i2cwrite(MCP23017_ADDRESS, MCP23017_GPIOB, value);
+            i2cwrite(BASEIO_ADDRESS, BASEIO_GPIOB, value);
         }
     }
  
@@ -137,14 +137,14 @@ namespace MCP23017 {
     //% weight=85
     export function ReadPin(pin: PIN): number {
         if (!initialized) {
-            initMCP23017();
+            initBASEIO();
         }
         if (pin == 0) {
-            let val = i2cread(MCP23017_ADDRESS, MCP23017_GPIOA);
+            let val = i2cread(BASEIO_ADDRESS, BASEIO_GPIOA);
             return val;
         }
         else {
-            let val = i2cread(MCP23017_ADDRESS, MCP23017_GPIOB);
+            let val = i2cread(BASEIO_ADDRESS, BASEIO_GPIOB);
             return val;
         }
     }

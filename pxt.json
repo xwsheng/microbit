@@ -1,14 +1,14 @@
 {
-    "name": "custom",
-    "version": "0.0.0",
-    "description": "Excise Custom ts",
+    "name": "baseIO",
+    "version": "0.0.1",
+    "description": "Microbit Base I/O",
     "dependencies": {
         "core": "*",
         "radio": "*"
     },
     "files": [
         "README.md",
-        "custom.ts"
+        "baseIO.ts"
     ],
     "testFiles": [
         "test.ts"
