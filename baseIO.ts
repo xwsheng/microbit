@@ -102,7 +102,7 @@ namespace BASEIO {
      *Read data from the register
      * @param reg [0-21] register of mcp23017; eg: 0, 15, 23
     */
-    //% blockId=ReadReg block="Read register |%reg| data"
+    //% blockId=ReadReg block="读取端口数据: P |%reg|"
     //% weight=65
     export function ReadReg(reg: REGISTER): number {
         let val = i2cread(BASEIO_ADDRESS, reg);
@@ -114,7 +114,7 @@ namespace BASEIO {
      * @param pin [0-1] choose PinA or PinB; eg: 0, 1
      * @param value [0-255] pulse of servo; eg: 128, 0, 255
     */
-    //% blockId=WritePin block="Set P |%pin| value |%value|"
+    //% blockId=WritePin block="设置端口 P |%pin| 的值为: |%value|"
     //% weight=75
     //% value.min=0 value.max=255
     export function WritePin(pin: PIN, value: number): void {
@@ -133,7 +133,7 @@ namespace BASEIO {
      *ReadData From PinA or PinB
      * @param pin [0-1] choose PinA or PinB; eg: 0, 1
     */
-    //% blockId=ReadPin block="Read data from |%pin|"
+    //% blockId=ReadPin block="读取指定端口数据: |%pin|"
     //% weight=85
     export function ReadPin(pin: PIN): number {
         if (!initialized) {
